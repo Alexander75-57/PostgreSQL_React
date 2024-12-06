@@ -7,11 +7,11 @@ class Store {
 
     count = 0;
 
-    inc = (value: number) => {
+    inc = (value) => {
         this.count += value;
     };
 
-    dec = (value: number) => {
+    dec = (value) => {
         this.count -= value;
     };
 
