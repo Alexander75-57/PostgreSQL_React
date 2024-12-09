@@ -13,16 +13,15 @@ const App = () => {
             };
             console.log(data);
             try {
-                const response = await axios.post({
-                    url: 'http://localhost:4015/',
+                const response = await axios({
+                    url: 'http://localhost:4015/graphql',
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    //{query: data}
                     data: {
-                        query: `mutation ($email: String!, $password: String!) {
-                            addUser(email: $email, password: $password) {
+                        query: `mutation CreateUser($email: String!, $password: String!) {
+                            createUser(addUser: {email: $email, password: $password}) {
                             email
                             password
                             }
@@ -149,4 +148,28 @@ export default App;
         password: store.password,
     },
 } 
+*/
+
+/*
+
+const response = await axios({
+    url: 'http://localhost:4015',
+    method: 'post',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    data: {
+        query: `mutation addUser($email: String!, $password: String!) {
+            addUser(email: $email, password: $password) {
+            email
+            password
+            }
+        }`,
+        variables: {
+            email: store.email,
+            password: store.password,
+        },
+    },
+})
+
 */
