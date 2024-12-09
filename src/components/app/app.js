@@ -13,25 +13,26 @@ const App = () => {
             };
             console.log(data);
             try {
-                const response = await axios.post(
-                    'http://localhost:4015/',
+                const response = await axios.post({
+                    url: 'http://localhost:4015/',
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                     //{query: data}
-                    {
-                        query: `
-                        mutation createUser($email: String!, $password: String!) {
-                            createUser(email: $email,  password: $password) {
-                                email
-                                password
+                    data: {
+                        query: `mutation ($email: String!, $password: String!) {
+                            addUser(email: $email, password: $password) {
+                            email
+                            password
                             }
                         }`,
-                    },
-                    {
                         variables: {
                             email: store.email,
                             password: store.password,
                         },
-                    }
-                );
+                    },
+                });
                 console.log('Success:', response.data);
             } catch (error) {
                 console.error('Error:', error);
