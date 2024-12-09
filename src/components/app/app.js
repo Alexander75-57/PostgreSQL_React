@@ -1,19 +1,29 @@
 import { observable } from 'mobx';
 import './app.css';
+import axios from 'axios';
 
 const App = () => {
     const store = observable({
         email: '',
         password: '',
-        register: () => {
-            console.log('Registration Data:', {
+        sendData: async () => {
+            const data = {
                 email: store.email,
                 password: store.password,
-            });
+            };
+            try {
+                const response = await axios.post(
+                    'http://localhost:4015/graphql',
+                    data
+                );
+                console.log('Success:', response.data);
+            } catch (error) {
+                console.error('Error:', error);
+            }
         },
         handleSubmit: (e) => {
             e.preventDefault();
-            store.register();
+            store.sendData();
         },
     });
 
@@ -91,3 +101,18 @@ const App = () => {
 
 export default App;
  */
+
+// fetch('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', {
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(data),
+// })
+//     .then((response) => response.json())
+//     .then((data) => {
+//         console.log('Success:', data);
+//     })
+//     .catch((error) => {
+//         console.error('Error:', error);
+//     });
