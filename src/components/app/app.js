@@ -1,22 +1,39 @@
+import { observable } from 'mobx';
 import './app.css';
-import { useForm } from 'react-hook-form';
 
 const App = () => {
+    const store = observable({
+        email: '',
+        password: '',
+        register: () => {
+            console.log('Registration Data:', {
+                email: store.email,
+                password: store.password,
+            });
+        },
+        handleSubmit: (e) => {
+            e.preventDefault();
+            store.register();
+        },
+    });
+
     return (
         <div className="app-add-form">
             <h3>REGISTRASTION</h3>
-            <form className="add-form d-flex">
+            <form className="add-form d-flex" onSubmit={store.handleSubmit}>
                 <input
                     id="email"
                     type="text"
                     className="form-control new-post-label"
                     placeholder="email"
+                    onChange={(e) => (store.email = e.target.value)}
                 />
                 <input
                     id="password"
                     type="password"
                     className="form-control new-post-label"
                     placeholder="password"
+                    onChange={(e) => (store.password = e.target.value)}
                 />
                 <button type="submit" className="btn btn-outline-light">
                     Register
@@ -74,22 +91,3 @@ const App = () => {
 
 export default App;
  */
-
-/* 
-import { observer } from 'mobx-react-lite';
-import store from '../counter/counter.store';
-import './app.css';
-
-const App = observer(() => {
-    const { count, inc, dec, double } = store;
-    return (
-        <>
-            <button onClick={() => inc(1)}>+</button>
-            <span>{count}</span>
-            <button onClick={() => dec(1)}>-</button>
-            <span>{double}</span>
-        </>
-    );
-});
-export default App;
-*/
