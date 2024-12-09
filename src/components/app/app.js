@@ -11,10 +11,26 @@ const App = () => {
                 email: store.email,
                 password: store.password,
             };
+            console.log(data);
             try {
                 const response = await axios.post(
-                    'http://localhost:4015/graphql',
-                    data
+                    'http://localhost:4015/',
+                    //{query: data}
+                    {
+                        query: `
+                        mutation createUser($email: String!, $password: String!) {
+                            createUser(email: $email,  password: $password) {
+                                email
+                                password
+                            }
+                        }`,
+                    },
+                    {
+                        variables: {
+                            email: store.email,
+                            password: store.password,
+                        },
+                    }
                 );
                 console.log('Success:', response.data);
             } catch (error) {
@@ -116,3 +132,20 @@ export default App;
 //     .catch((error) => {
 //         console.error('Error:', error);
 //     });
+/* 
+{
+    query: `
+    mutation createUser($email: String!, $password: String!) {
+        createUser(email: $email,  password: $password) {
+            email
+            password
+        }
+    }`,
+},
+{
+    variables: {
+        email: store.email,
+        password: store.password,
+    },
+} 
+*/
