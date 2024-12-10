@@ -1,4 +1,4 @@
-import { ApolloClient } from '@apollo/client';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { gql } from '@apollo/client';
 import { observable } from 'mobx';
 
@@ -11,6 +11,7 @@ const App = () => {
         sendData: async () => {
             const client = new ApolloClient({
                 uri: 'http://localhost:4015/graphql',
+                cache: new InMemoryCache(),
             });
             const { data } = await client.mutate({
                 mutation: gql`
