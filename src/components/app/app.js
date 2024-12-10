@@ -13,23 +13,40 @@ const App = () => {
                 uri: 'http://localhost:4015/graphql',
                 cache: new InMemoryCache(),
             });
-            const { data } = await client.mutate({
-                mutation: gql`
-                    mutation CreateUser($email: String!, $password: String!) {
-                        createUser(
-                            addUser: { email: $email, password: $password }
-                        ) {
-                            email
-                            password
+            client
+                .query({
+                    query: gql`
+                        query CreateUser($email: String!, $password: String!) {
+                            addUser(email: $email, password: $password) {
+                                email
+                                password
+                            }
                         }
-                    }
-                `,
-                variables: {
-                    email: store.email,
-                    password: store.password,
-                },
-            });
-            console.log(data);
+                    `,
+                    variables: {
+                        email: store.email,
+                        password: store.password,
+                    },
+                })
+                .then((response) => console.log(response.data))
+                .catch((error) => console.error(error));
+            // const { data } = await client.mutate({
+            //     mutation: gql`
+            //         mutation CreateUser($email: String!, $password: String!) {
+            //             createUser(
+            //                 addUser: { email: $email, password: $password }
+            //             ) {
+            //                 email
+            //                 password
+            //             }
+            //         }
+            //     `,
+            //     variables: {
+            //         email: store.email,
+            //         password: store.password,
+            //     },
+            // });
+            // console.log(data);
         },
         handleSubmit: (e) => {
             e.preventDefault();
